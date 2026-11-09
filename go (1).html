@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Pen Lab - ad click redirect</title>
+<script>
+  // Pretends to be the redirect between an ad click and the landing page.
+  // No GTM on this page, like a real redirect: GA4 only sees what arrives on index.html.
+  // ?mode=broken  -> drops every URL parameter (gclid and UTMs are lost)
+  // anything else -> keeps the parameters
+  var q = new URLSearchParams(location.search);
+  var mode = q.get('mode');
+  q.delete('mode');
+  var rest = q.toString();
+  if (mode === 'broken') {
+    location.replace('index.html');
+  } else {
+    location.replace('index.html' + (rest ? '?' + rest : ''));
+  }
+</script>
+</head>
+<body>
+<p>Redirecting...</p>
+</body>
+</html>
